@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <AssemblyName>Nfsw.Core.Victory</AssemblyName>
+    <RootNamespace>Victory</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DataLayer\Serialization\Event\" />
+    <Folder Include="DataLayer\Serialization\Social\" />
+    <Folder Include="DataObjects\Objects\LoginAnnouncement\" />
+    <Folder Include="Data\Objects\Costomization\" />
+    <Folder Include="Voip\" />
+    <Folder Include="Service\Objects\" />
+    <Folder Include="TransferObjects\DriverPersona\" />
+    <Folder Include="TransferObjects\Session\" />
+    <Folder Include="TransferObjects\News\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

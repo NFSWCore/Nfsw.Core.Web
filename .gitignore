@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Victory/bin
+/Victory/obj
+/Nfsw.Core.Web/bin
+/Nfsw.Core.Web/obj
+/Nfsw.Core.Common/bin
+/Nfsw.Core.Common/obj
