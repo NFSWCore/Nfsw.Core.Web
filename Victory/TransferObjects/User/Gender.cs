@@ -1,8 +1,8 @@
 ﻿namespace Victory.TransferObjects.User
 {
-    public enum Gender
+    public enum Gender : byte
     {
-        Male,
-        Female
+        Male = 1,
+        Female = 2
     }
 }

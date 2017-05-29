@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Nfsw.Core.Common.Database;
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using Victory.TransferObjects.DriverPersona;
 using Victory.TransferObjects.User;
 
 namespace Nfsw.Core.Web.Controllers
@@ -17,18 +18,18 @@ namespace Nfsw.Core.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private UserDbContext _UserDB;
+        private NfswDbContext _DB;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="factory"></param>
         /// <param name="logger"></param>
-        public UserController(UserDbContext _dbContext, ILogger<UserController> logger)
+        public UserController(NfswDbContext _dbContext, ILogger<UserController> logger)
         {
             _logger = logger;
-            _UserDB = _dbContext;
-            _UserDB.Database.EnsureCreated();
+            _DB = _dbContext;
+            _DB.Database.EnsureCreated();
         }
 
         /// <summary>
@@ -42,27 +43,53 @@ namespace Nfsw.Core.Web.Controllers
             var userId = long.Parse(HttpContext.Request.Headers["userId"]);
 
             UserInfo uinfo = new UserInfo();
-            uinfo.DefaultPersonaIdx = userId;
 
-            // todo load profiles from database
+            var user = _DB
+                        .Users
+                        .Where(x => x.id == userId)
+                        .SingleOrDefault();
+
+            if (user == null)
+                return new UserInfo();
+
+            var _profiles = _DB
+                             .Profiles
+                             .Where(x => x.userid == user.id)
+                             .ToList();
+
             var profiles = new List<ProfileData>();
-            profiles.Add(new ProfileData() {
-                Name = "TEST",
-                Cash = 9999999,
-                Boost = 99999,
-                IconIndex = 1,
-                PersonaId = 1,
-                Level = 1
-            });
-            uinfo.Personas = profiles;
 
-            // todo load user data from database
-            var user = new User();
-            user.UserId = userId;
-            user.SecurityToken = Guid.Parse(securityToken);
-            user.FullGameAccess = true;
-            user.LastAuthDate = DateTime.Now;
-            uinfo.User = user;
+            foreach(var p in _profiles)
+            {
+                var profile = new ProfileData()
+                {
+                    Name = p.name,
+                    Cash = p.cash,
+                    Boost = p.boost,
+                    IconIndex = p.icon_index,
+                    PersonaId = p.id,
+                    Level = p.level,
+                    PercentToLevel = p.percent_to_level,
+                    Rating = p.rating,
+                    Rep = p.reputation,
+                    RepAtCurrentLevel = p.rep_atcurrent_level,
+                    Motto = p.motto,
+                    ccar = new List<PersonaCCar>()
+                };
+                profiles.Add(profile);
+            }
+
+            uinfo.DefaultPersonaIdx = user.id;
+            uinfo.Personas = profiles;
+            uinfo.User = new User()
+            {
+                UserId = user.id,
+                SecurityToken = user.security_token,
+                Email = user.email,
+                LastAuthDate = user.updated_at,
+                Gender = (Gender)user.gender,
+                FullGameAccess = true
+            };
 
             return uinfo;
         }

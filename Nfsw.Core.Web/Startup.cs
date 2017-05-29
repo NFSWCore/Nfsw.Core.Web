@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Nfsw.Core.Common.Database;
+using MySQL.Data.Entity.Extensions;
 
 namespace Nfsw.Core.Web
 {
@@ -39,9 +39,7 @@ namespace Nfsw.Core.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<UserDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServerTrusted"))
-            );
+            ConfigureDatabaseContext(services);
 
             services.AddMvc(options =>
             {
@@ -54,6 +52,18 @@ namespace Nfsw.Core.Web
             {
                 options.EnableForHttps = false;
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        public void ConfigureDatabaseContext(IServiceCollection services)
+        {
+            // User Db
+            services.AddDbContext<NfswDbContext>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("MySqlServer"))
+            );
         }
 
         /// <summary>

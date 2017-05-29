@@ -12,9 +12,6 @@
     <Folder Include="DataObjects\Objects\LoginAnnouncement\" />
     <Folder Include="Data\Objects\Costomization\" />
     <Folder Include="Voip\" />
-    <Folder Include="Service\Objects\" />
-    <Folder Include="TransferObjects\DriverPersona\" />
-    <Folder Include="TransferObjects\Session\" />
     <Folder Include="TransferObjects\News\" />
   </ItemGroup>
 
