@@ -19,7 +19,7 @@ namespace Nfsw.Core.Common.Utilities
 
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < hash.Length; i++)
-                    sb.Append(hash[i].ToString("X2"));
+                    sb.Append(hash[i].ToString("X2").ToLower());
 
                 return sb.ToString();
             }

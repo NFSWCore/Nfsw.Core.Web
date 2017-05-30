@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using Victory;
 using Victory.DataLayer.Serialization;
 using Victory.Service;
 using Victory.Service.Objects.Event;
@@ -26,6 +27,11 @@ namespace Nfsw.Core.Web.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getfriendlistfromuserid
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("getfriendlistfromuserid")]
         public PersonaFriendsList GetFriendListFromUserId(long userId)
         {
@@ -39,6 +45,11 @@ namespace Nfsw.Core.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getusersettings
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("getusersettings")]
         public UserSettings GetUserSettings(long userId)
         {
@@ -66,6 +77,10 @@ namespace Nfsw.Core.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/systeminfo
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("systeminfo")]
         public SystemInfo SystemInfo()
         {
@@ -95,6 +110,10 @@ namespace Nfsw.Core.Web.Controllers
             return sys;
         }
 
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/carclasses
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("carclasses")]
         public List<CarClass> CarClasses()
         {
@@ -138,6 +157,63 @@ namespace Nfsw.Core.Web.Controllers
             });
 
             return carClass;
+        }
+
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getrebroadcasters
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getrebroadcasters")]
+        public List<UdpRelayInfo> GetReBroadCasters()
+        {
+            List<UdpRelayInfo> udpRelayInfos = new List<UdpRelayInfo>();
+
+            udpRelayInfos.Add(new UdpRelayInfo()
+            {
+                Host = "127.0.0.1",
+                Port = 9999
+            });
+
+            return udpRelayInfos;
+        }
+
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getregioninfo
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getregioninfo")]
+        public RegionInfo GetRegionInfo()
+        {
+            return new RegionInfo()
+            {
+                CountdownProposalInMilliseconds = 3000,
+                DirectConnectTimeoutInMilliseconds = 1000,
+                DropOutTimeInMilliseconds = 15000,
+                EventLoadTimeoutInMilliseconds = 30000,
+                HeartbeatIntervalInMilliseconds = 1000,
+                UdpRelayBandwidthInBps = 9600,
+                UdpRelayTimeoutInMilliseconds = 60000
+            };
+        }
+
+        [HttpGet("LoginAnnouncements")]
+        public LoginAnnouncementsDefinition LoginAnnouncements(string language)
+        {
+            return new LoginAnnouncementsDefinition()
+            {
+                Announcements = new List<LoginAnnouncementDefinition>()
+                {
+                    new LoginAnnouncementDefinition()
+                    {
+                        Context = "NotApplicable",
+                        Id = 1,
+                        ImageChecksum = -1,
+                        ImageUrl = "0.png",
+                        Type = AnnouncementType.ImageOnly
+                    }
+                },
+                ImagesPath = "http://localhost/announcements"
+            };
         }
     }
 }

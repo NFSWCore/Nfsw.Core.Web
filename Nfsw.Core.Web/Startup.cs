@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Nfsw.Core.Common.Database;
 using MySQL.Data.Entity.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Nfsw.Core.Web
 {
@@ -45,7 +46,10 @@ namespace Nfsw.Core.Web
             {
                 options.Filters.Add(new ProducesAttribute("application/xml"));
                 options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                options.InputFormatters.Add(new XmlDataContractSerializerInputFormatter());
             });
+
+            services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
 
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression(options =>
