@@ -25,10 +25,10 @@ namespace Victory.DataLayer.Serialization
         public string Name { get; set; }
 
         [DataMember]
-        public List<CustomPaintTrans> Paints = new List<CustomPaintTrans>();
+        public List<CustomPaintTrans> Paints { get; set; }
 
         [DataMember]
-        public List<PerformancePartTrans> PerformanceParts = new List<PerformancePartTrans>();
+        public List<PerformancePartTrans> PerformanceParts { get; set; }
 
         [DataMember]
         public int PhysicsProfileHash { get; set; }
@@ -43,7 +43,7 @@ namespace Victory.DataLayer.Serialization
         public int RideHeightDrop { get; set; }
 
         [DataMember]
-        public List<SkillModPartTrans> SkillModParts = new List<SkillModPartTrans>();
+        public List<SkillModPartTrans> SkillModParts { get; set; }
 
         [DataMember]
         public int SkillModSlotCount { get; set; }
@@ -52,9 +52,9 @@ namespace Victory.DataLayer.Serialization
         public int Version { get; set; }
 
         [DataMember]
-        public List<CustomVinylTrans> Vinyls = new List<CustomVinylTrans>();
+        public List<CustomVinylTrans> Vinyls { get; set; }
 
         [DataMember]
-        public List<VisualPartTrans> VisualParts = new List<VisualPartTrans>();
+        public List<VisualPartTrans> VisualParts { get; set; }
     }
 }

@@ -7,9 +7,7 @@ namespace Nfsw.Core.Common.Database
     {
         public NfswDbContext(DbContextOptions<NfswDbContext> options) :
             base(options)
-        {
-
-        }
+        { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }

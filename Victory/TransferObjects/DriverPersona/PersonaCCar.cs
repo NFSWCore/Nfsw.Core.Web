@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Victory.TransferObjects.DriverPersona
 {
-    [DataContract]
+    [DataContract(Namespace = "")]
     public class PersonaCCar
     {
         [DataMember(Name = "PersonaId")]

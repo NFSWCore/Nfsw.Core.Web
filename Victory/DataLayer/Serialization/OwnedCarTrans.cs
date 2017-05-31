@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Victory.DataLayer.Serialization
@@ -8,13 +7,13 @@ namespace Victory.DataLayer.Serialization
     public class OwnedCarTrans
     {
         [DataMember]
-        public List<CustomCar> CustomCar = new List<CustomCar>();
+        public CustomCar CustomCar { get; set; }
 
         [DataMember]
         public int Durability { get; set; }
 
         [DataMember]
-        public DateTime? ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
 
         [DataMember]
         public int Heat { get; set; }

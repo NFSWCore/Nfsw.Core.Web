@@ -34,7 +34,7 @@ namespace Victory.TransferObjects.User
         public bool FullGameAccess { get; set; }
 
         [DataMember(Name = "gender")]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [DataMember(Name = "idDigits")]
         public string IdDigits { get; set; }
@@ -49,7 +49,7 @@ namespace Victory.TransferObjects.User
         public string Language { get; set; }
 
         [DataMember(Name = "lastAuthDate")]
-        public DateTime LastAuthDate { get; set; }
+        public DateTime? LastAuthDate { get; set; }
 
         [DataMember(Name = "lastName")]
         public string LastName { get; set; }
@@ -70,7 +70,7 @@ namespace Victory.TransferObjects.User
         public string ReasonCode { get; set; }
 
         [DataMember(Name = "remoteUserId")]
-        public int RemoteUserId { get; set; }
+        public long RemoteUserId { get; set; }
 
         [DataMember(Name = "securityToken")]
         public Guid SecurityToken { get; set; }
@@ -82,10 +82,10 @@ namespace Victory.TransferObjects.User
         public string Status { get; set; }
 
         [DataMember(Name = "subscribeMsg")]
-        public string SubscribeMsg { get; set; }
+        public bool SubscribeMsg { get; set; }
 
         [DataMember(Name = "tosVersion")]
-        public int TosVersion { get; set; }
+        public int? TosVersion { get; set; }
 
         [DataMember(Name = "userId")]
         public long UserId { get; set; }

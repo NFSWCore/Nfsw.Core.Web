@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Nfsw.Core.Common.Database;
 using System.Collections.Generic;
 using System.Linq;
+using Victory.DataLayer.Serialization;
 using Victory.TransferObjects.DriverPersona;
 using Victory.TransferObjects.User;
 
@@ -37,7 +38,7 @@ namespace Nfsw.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("GetPermanentSession")]
-        public UserInfo GetPermanentSession()
+        public UserInfo GetPermanentSession([FromBody]GetPermanentSessionData permanentSessionData)
         {
             var securityToken = HttpContext.Request.Headers["securityToken"];
             var userId = long.Parse(HttpContext.Request.Headers["userId"]);
@@ -75,20 +76,32 @@ namespace Nfsw.Core.Web.Controllers
                     RepAtCurrentLevel = p.rep_atcurrent_level,
                     Motto = p.motto,
                     ccar = new List<PersonaCCar>()
+                    {
+                        new PersonaCCar()
+                        {
+                            Ccid = 1,
+                            Durability = 100,
+                            Heat = 0,
+                            IsDefault = true,
+                            PersonaId = 1
+                        }
+                    }
                 };
                 profiles.Add(profile);
             }
 
-            uinfo.DefaultPersonaIdx = user.id;
+            //uinfo.DefaultPersonaIdx = user.id;
             uinfo.Personas = profiles;
             uinfo.User = new User()
             {
                 UserId = user.id,
+                RemoteUserId = 1000000000001L,
                 SecurityToken = user.security_token,
                 Email = user.email,
-                LastAuthDate = user.updated_at,
-                Gender = (Gender)user.gender,
-                FullGameAccess = true
+                FullGameAccess = true,
+                StarterPackEntitlementTag = "NFSW_STARTER_PACK_A",
+                SubscribeMsg = false,
+
             };
 
             return uinfo;
@@ -99,9 +112,14 @@ namespace Nfsw.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("SecureLoginPersona")]
-        public string SecureLoginPersona()
+        public string SecureLoginPersona(long personaId)
         {
-            return string.Empty;
+            var securityToken = HttpContext.Request.Headers["securityToken"];
+            var userId = long.Parse(HttpContext.Request.Headers["userId"]);
+
+            // todo set active session personaId by userid or securityToken
+
+            return "";
         }
 
         /// <summary>
@@ -111,7 +129,9 @@ namespace Nfsw.Core.Web.Controllers
         [HttpPost("SecureLogoutPersona")]
         public string SecureLogoutPersona()
         {
-            return string.Empty;
+            // todo delete active session persona
+
+            return "";
         }
 
         /// <summary>
@@ -119,9 +139,13 @@ namespace Nfsw.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("SecureLogout")]
-        public string SecureLogout()
+        public string SecureLogout(long userId, long personaId, int exitCode)
         {
-            return string.Empty;
+            _logger.LogInformation($"SecureLogout - userId:{userId}, personaId:{personaId},exitCode:{exitCode}");
+
+            // todo delete active session persona
+
+            return "";
         }
     }
 }

@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Victory;
 using Victory.DataLayer.Serialization;
 using Victory.Service;
+using Victory.Service.Objects;
 using Victory.Service.Objects.Event;
 using Victory.TransferObjects.DriverPersona;
 
@@ -51,7 +53,7 @@ namespace Nfsw.Core.Web.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("getusersettings")]
-        public UserSettings GetUserSettings(long userId)
+        public User_Settings GetUserSettings(long userId)
         {
             List<string> _activatedHolidaySceneryGroups = new List<string>();
             _activatedHolidaySceneryGroups.Add("SCENERY_GROUP_NORMAL");
@@ -61,7 +63,7 @@ namespace Nfsw.Core.Web.Controllers
             _disactivatedHolidaySceneryGroups.Add("SCENERY_GROUP_NORMAL_DISABLE");
             _disactivatedHolidaySceneryGroups.Add("PLACEHOLDER");
 
-            return new UserSettings()
+            return new User_Settings()
             {
                 CarCacheAgeLimit = 600,
                 IsRaceNowEnabled = true,
@@ -214,6 +216,47 @@ namespace Nfsw.Core.Web.Controllers
                 },
                 ImagesPath = "http://localhost/announcements"
             };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        [HttpPost("heartbeat")]
+        public HeartBeat HeartBeat([FromBody]Report report)
+        {
+            return new HeartBeat()
+            {
+                EnabledBitField = 0,
+                MetagameFlags = 2
+            };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpPut("setusersettings")]
+        public User_Settings SetUserSettings([FromBody]User_Settings userSettings)
+        {
+            string input = new StreamReader(HttpContext.Request.Body).ReadToEnd();
+
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine(userSettings.firstTimeLogin);
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+
+            return userSettings;
+        }
+
+        [HttpGet("getsocialsettings")]
+        public string GetSocialSettings()
+        {
+            string input = new StreamReader(HttpContext.Request.Body).ReadToEnd();
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine(input);
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+
+            return "";
         }
     }
 }

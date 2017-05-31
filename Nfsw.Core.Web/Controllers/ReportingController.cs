@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
+using Victory.DataLayer.Serialization;
 
 namespace Nfsw.Core.Web.Controllers
 {
@@ -8,22 +7,17 @@ namespace Nfsw.Core.Web.Controllers
     public class ReportingController : Controller
     {
         [HttpPost("SendHardwareInfo")]
-        public string SendHardwareInfo()
+        public string SendHardwareInfo([FromBody]HardwareInfo hardwareInfo)
         {
-            var input = new StreamReader(Request.Body).ReadToEnd();
-
-            Console.WriteLine(input);
-
+            // todo log user hardware
+            // for banning or each other
             return "";
         }
 
         [HttpPost("SendUserSettings")]
-        public string SendUserSettings()
+        public string SendUserSettings([FromBody]UserSettings userSettings)
         {
-            var input = new StreamReader(Request.Body).ReadToEnd();
-
-            Console.WriteLine(input);
-
+            // todo store user setting in database
             return "";
         }
     }

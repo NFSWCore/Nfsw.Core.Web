@@ -1,45 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Victory.DataLayer.Serialization
 {
-    [DataContract(Name = "User_Settings", Namespace = "")]
+    [DataContract]
     public class UserSettings
     {
-        [DataMember]
-        public int CarCacheAgeLimit { get; set; }
+        [DataMember(Name = "userID")]
+        public long UserID { get; set; }
 
-        [DataMember]
-        public bool IsRaceNowEnabled { get; set; }
+        [DataMember(Name = "globalDetailLevel")]
+        public int GlobalDetailLevel { get; set; }
 
-        [DataMember]
-        public int MaxCarCacheSize { get; set; }
+        [DataMember(Name = "gameResWidth")]
+        public int GameResWidth { get; set; }
 
-        [DataMember]
-        public int MinRaceNowLevel { get; set; }
+        [DataMember(Name = "gameResHeight")]
+        public int GameResHeight { get; set; }
 
-        [DataMember]
-        public bool VoipAvailable { get; set; }
+        [DataMember(Name = "fullscreen")]
+        public bool Fullscreen { get; set; }
 
-        [DataMember()]
-        public List<string> activatedHolidaySceneryGroups { get; set; }
+        [DataMember(Name = "desktopResWidth")]
+        public int DesktopResWidth { get; set; }
 
-        [DataMember()]
-        public List<long> activeHolidayIds { get; set; }
-
-        [DataMember()]
-        public List<string> disactivatedHolidaySceneryGroups { get; set; }
-
-        [DataMember]
-        public bool firstTimeLogin { get; set; }
-
-        [DataMember]
-        public int maxLevel { get; set; }
-
-        [DataMember]
-        public bool starterPackApplied { get; set; }
-
-        [DataMember]
-        public long userId { get; set; }
+        [DataMember(Name = "desktopResHeight")]
+        public int DesktopResHeight { get; set; }
     }
 }

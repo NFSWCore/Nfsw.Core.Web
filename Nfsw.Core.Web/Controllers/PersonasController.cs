@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using Victory.DataLayer.Serialization;
 
@@ -10,12 +11,9 @@ namespace Nfsw.Core.Web.Controllers
         [HttpGet("{personaId}/carslots")]
         public CarSlotInfoTrans carslots(long personaId, string language)
         {
-            var ownedCarTrans = new List<OwnedCarTrans>();
-            ownedCarTrans.Add(getOwnedCarTransExample());
-
             CarSlotInfoTrans carSlotInfoTrans = new CarSlotInfoTrans()
             {
-                CarsOwnedByPersona = ownedCarTrans,
+                CarsOwnedByPersona = new List<OwnedCarTrans>() { getOwnedCarTransExample() },
                 DefaultOwnedCarIndex = 0,
                 ObtainableSlots = new List<ProductTrans>(),
                 OwnedCarSlotsCount = 1
@@ -125,13 +123,10 @@ namespace Nfsw.Core.Web.Controllers
 
             return new OwnedCarTrans()
             {
-                CustomCar = new List<CustomCar>()
-                {
-                    customCar
-                },
+                CustomCar = customCar,
                 Id = 123456L,
                 Durability = 100,
-                ExpirationDate = null,
+                ExpirationDate = DateTime.Now,
                 Heat = 0,
                 OwnershipType = "PresetCar"
             };
