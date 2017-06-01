@@ -6,5 +6,11 @@
 Httpserver using Kestrel web server
 GZip Response Enabled
 SSL Https optional
-Database using SQLServer 2016 (Express)
+Database using MySQL Entity Framework Auto installed scripts
+```
+
+compile with Visual Studio 2017 Community Version
+Running server by command
+```
+dotnet Nfsw.Core.Web.dll
 ```
