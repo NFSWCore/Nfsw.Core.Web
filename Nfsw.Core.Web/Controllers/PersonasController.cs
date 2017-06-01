@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using Victory.DataLayer;
 using Victory.DataLayer.Serialization;
 
 namespace Nfsw.Core.Web.Controllers
@@ -41,6 +42,35 @@ namespace Nfsw.Core.Web.Controllers
             carSlotInfoTrans.ObtainableSlots.Add(p);
 
             return carSlotInfoTrans;
+        }
+
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/personas/inventory/objects
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("inventory/objects")]
+        public InventoryTrans inventoryObjects()
+        {
+            var userId = long.Parse(HttpContext.Request.Headers["userId"]);
+
+            InventoryTrans inventoryTrans = new InventoryTrans();
+
+            inventoryTrans.InventoryItems = new List<InventoryItemTrans>()
+            {
+                new InventoryItemTrans()
+                {
+                    EntitlementTag = "nosshot",
+                    Hash = -1681514783,
+                    InventoryId = 1842996427L,
+                    ProductId = "DO NOT USE ME",
+                    RemainingUseCount = 100,
+                    ResellPrice = 0.00,
+                    Status = "ACTIVE",
+                    VirtualItemType = "powerup"
+                }
+            };
+
+            return inventoryTrans;
         }
 
         /// <summary>

@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using Victory;
 using Victory.DataLayer.Serialization;
+using Victory.DataLayer.Serialization.Social;
 using Victory.Service;
 using Victory.Service.Objects;
 using Victory.Service.Objects.Event;
 using Victory.TransferObjects.DriverPersona;
+using Victory.TransferObjects.News;
 
 namespace Nfsw.Core.Web.Controllers
 {
@@ -113,7 +115,7 @@ namespace Nfsw.Core.Web.Controllers
         }
 
         /// <summary>
-        /// GET http://localhost:7331/Engine.svc/carclasses
+        /// http://localhost:7331/Engine.svc/carclasses
         /// </summary>
         /// <returns></returns>
         [HttpGet("carclasses")]
@@ -198,6 +200,11 @@ namespace Nfsw.Core.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/LoginAnnouncements
+        /// </summary>
+        /// <param name="language"></param>
+        /// <returns></returns>
         [HttpGet("LoginAnnouncements")]
         public LoginAnnouncementsDefinition LoginAnnouncements(string language)
         {
@@ -219,7 +226,7 @@ namespace Nfsw.Core.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// GET http://localhost:7331/Engine.svc/heartbeat
         /// </summary>
         /// <param name="report"></param>
         /// <returns></returns>
@@ -234,29 +241,112 @@ namespace Nfsw.Core.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// GET http://localhost:7331/Engine.svc/setusersettings
         /// </summary>
+        /// <param name="userSettings"></param>
+        /// <returns></returns>
         [HttpPut("setusersettings")]
         public User_Settings SetUserSettings([FromBody]User_Settings userSettings)
         {
-            string input = new StreamReader(HttpContext.Request.Body).ReadToEnd();
-
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine(userSettings.firstTimeLogin);
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
-
             return userSettings;
         }
 
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getsocialsettings
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("getsocialsettings")]
-        public string GetSocialSettings()
+        public SocialSettings GetSocialSettings()
         {
-            string input = new StreamReader(HttpContext.Request.Body).ReadToEnd();
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine(input);
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+            return new SocialSettings()
+            {
+                AppearOffline = false,
+                DeclineGroupInvite = 0,
+                DeclineIncommingFriendRequests = false,
+                DeclinePrivateInvite = 0,
+                HideOfflineFriends = false,
+                ShowNewsOnSignIn = true,
+                ShowOnlyPlayersInSameChatChannel = false
+            };
+        }
 
-            return "";
+        /// <summary>
+        /// PUT http://localhost:7331/Engine.svc/setsocialsettings text/xml;charset=utf-8
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("setsocialsettings")]
+        public SocialSettings SetSocialSettings([FromBody]SocialSettings socialSettings)
+        {
+            //todo social setting to database
+
+            return socialSettings;
+        }
+
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getblockeduserlist?userId={ID}
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("getblockeduserlist")]
+        public List<long> GetBlockedUserList(long userId)
+        {
+            //todo get blocked user list from database
+
+            return new List<long>();
+        }
+
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/getblockersbyusers?personaId={ID}
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("getblockersbyusers")]
+        public List<long> GetBlockersByUsers(long personaId)
+        {
+            //todo get user blocked me list from database
+
+            return new List<long>();
+        }
+
+        /// <summary>
+        /// GET http://localhost:7331/Engine.svc/NewsArticles?personaId=1
+        /// </summary>
+        /// <param name="personaId"></param>
+        /// <returns></returns>
+        [HttpGet("NewsArticles")]
+        public List<NewsArticleTrans> NewsArticles(long personaId)
+        {
+            return new List<NewsArticleTrans>()
+            {
+                new NewsArticleTrans()
+                {
+                    ExpiryTime = DateTime.Now.AddMonths(1),
+                    Filters = 0,
+                    IconType = 1,
+                    LongText_HALId = "∑¥ Õ∫¢ÈÕ§«“¡·∫∫¬“««««««««««««««««««««««««",
+                    NewsId = 1,
+                    Parameters = "#1111111",
+                    PersonaId = 1,
+                    ShortText_HALId = "∑¥ Õ∫¢ÈÕ§«“¡ —ÈπÊ",
+                    Sticky = 0,
+                    Timestamp = DateTime.Now.Millisecond,
+                    Type = 1
+                },
+                new NewsArticleTrans()
+                {
+                    ExpiryTime = DateTime.Now.AddMonths(1),
+                    Filters = 0,
+                    IconType = 2,
+                    LongText_HALId = "∑¥ Õ∫¢ÈÕ§«“¡·∫∫¬“««««««««««««««««««««««««",
+                    NewsId = 2,
+                    Parameters = "#2222222",
+                    PersonaId = 1,
+                    ShortText_HALId = "∑¥ Õ∫¢ÈÕ§«“¡ —ÈπÊ",
+                    Sticky = 1,
+                    Timestamp = DateTime.Now.Millisecond,
+                    Type = 2
+                }
+            };
         }
     }
 }

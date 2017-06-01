@@ -8,11 +8,9 @@
 
   <ItemGroup>
     <Folder Include="DataLayer\Serialization\Event\" />
-    <Folder Include="DataLayer\Serialization\Social\" />
     <Folder Include="DataObjects\Objects\LoginAnnouncement\" />
     <Folder Include="Data\Objects\Costomization\" />
     <Folder Include="Voip\" />
-    <Folder Include="TransferObjects\News\" />
   </ItemGroup>
 
   <ItemGroup>
